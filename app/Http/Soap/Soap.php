@@ -13,7 +13,7 @@ class Soap
             $this->soapClientInitDefault();
         } else {
             if ($options == null) {
-                $options = array('login' => 'INTERNSHIP\COSMIN.PETRICA', 'password' => 'WM2b11jbIS22nry/upw9QtsorzIb3NUvwflwjUz2WLA=');
+                $options = array('login' => 'INTERNSHIP\COSMIN.PETRICA', 'password' => 'ptQ+G8glW1zBoeXzCllmVeLANqXvneMxpgyTA5MZhJ8=');
             }
             $this->soapClientInit($wsdnServiceName, $options);
         }
@@ -21,15 +21,15 @@ class Soap
 
     function soapClientInitDefault()
     {
-        $this->soapClientInit("https://internship.arggo.consulting:7047/DynamicsNAV100/WS/CP/Page/CP_Universities",
-        array('login' => 'INTERNSHIP\COSMIN.PETRICA', 'password' => 'WM2b11jbIS22nry/upw9QtsorzIb3NUvwflwjUz2WLA='));
+        $this->soapClientInit("http://internship.arggo.consulting:7047/DynamicsNAV100/WS/CP/Page/CP_Universities",
+        array('login' => 'INTERNSHIP\COSMIN.PETRICA', 'password' => 'ptQ+G8glW1zBoeXzCllmVeLANqXvneMxpgyTA5MZhJ8='));
 
         $this->tableName = 'Universities';
     }
 
     function soapClientInit($wsdnServiceName, $options)
     {
-        $wsdn = "https://internship.arggo.consulting:7047/DynamicsNAV100/WS/CP/Page/" . $wsdnServiceName;
+        $wsdn = "http://internship.arggo.consulting:7047/DynamicsNAV100/WS/CP/Page/" . $wsdnServiceName;
         $this->soapClient = new \SoapClient($wsdn, $options);
 
         $this->tableName = $this->getTableName($wsdn);
