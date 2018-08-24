@@ -177,9 +177,9 @@ class FacultiesController extends Controller
 
     public function notSafeToModify($id)
     {
-        $soap = new Soap('CP_Student');
+        $soap = new Soap('CP_Students');
         $students = $soap->ReadMultiple(0, ['Faculty_Id' => $id])->ReadMultiple_Result;
-        if (isset($students->CP_Student)) {
+        if (isset($students->CP_Students)) {
             \Session::flash('alert', 'Stergerea nu poate fi efectuata!'); 
             \Session::flash('alert-class', 'alert-danger'); 
 

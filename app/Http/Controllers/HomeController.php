@@ -32,10 +32,10 @@ class HomeController extends Controller
 
     public function assignedTests()
     {
-        $soap = new Soap('CP_Student');
+        $soap = new Soap('CP_Students');
         $student = $soap->ReadMultiple(1, ['User_Id' => Auth::user()->id])->ReadMultiple_Result;
-        if (!empty($student->CP_Student)) {
-            $student = $student->CP_Student;
+        if (!empty($student->CP_Students)) {
+            $student = $student->CP_Students;
 
             $soap = new Soap('CP_StudentTest');
             $studentTests = $soap->ReadMultiple(0, ['Student_Id' => $student->Id])->ReadMultiple_Result;
@@ -108,8 +108,8 @@ class HomeController extends Controller
         }
         $studentTest = $studentTest->CP_StudentTest;
 
-        $soap = new Soap('CP_Student');
-        $student = $soap->Read(['Id' => $studentTest->Student_Id])->CP_Student;
+        $soap = new Soap('CP_Students');
+        $student = $soap->Read(['Id' => $studentTest->Student_Id])->CP_Students;
         if($student->User_Id != Auth::user()->id) {
             return abort(403);
         }

@@ -34,9 +34,9 @@ class AssignmentsController extends Controller
         }
         
         foreach ($assignments as $assignment) {
-            $soap = new Soap('CP_Student');
+            $soap = new Soap('CP_Students');
             $student = $soap->Read(['Id' => $assignment->Student_Id]);
-            $assignment->Student_Email = User::where('id', $student->CP_Student->User_Id)->first()->email;
+            $assignment->Student_Email = strtolower($student->CP_Students->Email);
         }
         return view('admin.assignments.index', compact('assignments'));
     }
@@ -48,11 +48,11 @@ class AssignmentsController extends Controller
      */
     public function create()
     {
-        $soap = new Soap('CP_Student');
+        $soap = new Soap('CP_Students');
         $students = $soap->ReadMultiple()->ReadMultiple_Result;
-        if (isset($students->CP_Student)) {
-            if (is_array($students->CP_Student)) {
-                $students = $students->CP_Student;
+        if (isset($students->CP_Students)) {
+            if (is_array($students->CP_Students)) {
+                $students = $students->CP_Students;
             }
         }
 

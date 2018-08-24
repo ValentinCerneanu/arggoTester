@@ -29,11 +29,11 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        $soap = new Soap('CP_Student');
+        $soap = new Soap('CP_Students');
         $students = $soap->ReadMultiple()->ReadMultiple_Result;
 
-        if (is_array($students->CP_Student)) {
-            $students = $students->CP_Student;
+        if (is_array($students->CP_Students)) {
+            $students = $students->CP_Students;
         }
         foreach ($students as $student) {
             $soap = new Soap('CP_User');
@@ -85,10 +85,10 @@ class StudentsController extends Controller
         $soap = new Soap('CP_User');
         $soap->soapClient->Create($user);
 
-        $soap = new Soap('CP_Student');
+        $soap = new Soap('CP_Students');
         $students = $soap->ReadMultiple()->ReadMultiple_Result;
-        if (is_array($students->CP_Student)) {
-            $students = $students->CP_Student;
+        if (is_array($students->CP_Students)) {
+            $students = $students->CP_Students;
             $id = 1;
             foreach ($students as $std) {
                 if ($std->Id > $id) {
@@ -96,12 +96,12 @@ class StudentsController extends Controller
                 }
             }
         } else {
-            $id = $students->CP_Student->Id;
+            $id = $students->CP_Students->Id;
         }
         $id += 1;
 
         $student = [
-            'CP_Student' => [
+            'CP_Students' => [
                 'Id' => $id,
                 'User_Id' => $user['CP_User']['Id'],
                 'First_Name' => $request->first_name,
@@ -141,12 +141,12 @@ class StudentsController extends Controller
      */
     public function edit($id)
     {
-        $soap = new Soap('CP_Student');
+        $soap = new Soap('CP_Students');
         $student = $soap->Read(['Id' => $id]);
         if ($student == null) {
             return abort(404);
         }
-        $student = $student->CP_Student;
+        $student = $student->CP_Students;
 
         $soap = new Soap('CP_User');
         $user = $soap->Read(['Id' => $student->User_Id])->CP_User;
@@ -169,23 +169,23 @@ class StudentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $soap = new Soap('CP_Student');
+        $soap = new Soap('CP_Students');
         $student = $soap->Read(['Id' => $id]);
         if ($student == null) {
             return abort(404);
         }
 
-        $student->CP_Student->First_Name = $request->first_name;
-        $student->CP_Student->Last_Name = $request->last_name;
-        $student->CP_Student->Email = $request->email;
-        $student->CP_Student->Faculty_Id = $request->faculty_id;
-        $student->CP_Student->Year_Of_Study = "_x003" . $request->year_of_study ."_";
-        $student->CP_Student->Enrollment_Year = $request->enrollment_year;
-        $student->CP_Student->Graduation_Year = $request->graduation_year;
+        $student->CP_Students->First_Name = $request->first_name;
+        $student->CP_Students->Last_Name = $request->last_name;
+        $student->CP_Students->Email = $request->email;
+        $student->CP_Students->Faculty_Id = $request->faculty_id;
+        $student->CP_Students->Year_Of_Study = "_x003" . $request->year_of_study ."_";
+        $student->CP_Students->Enrollment_Year = $request->enrollment_year;
+        $student->CP_Students->Graduation_Year = $request->graduation_year;
 
         $soap->soapClient->Update($student);
         
-        $user = User::where('id', $student->CP_Student->User_Id)->first();
+        $user = User::where('id', $student->CP_Students->User_Id)->first();
         $user->update([
             'name' => $request->first_name . " " . $request->last_name,
             'email' => $request->email,
@@ -193,7 +193,7 @@ class StudentsController extends Controller
         ]);
 
         $soap = new Soap('CP_User');
-        $user = $soap->Read(['Id' => $student->CP_Student->User_Id]);
+        $user = $soap->Read(['Id' => $student->CP_Students->User_Id]);
         
         $user->CP_User->Name = $request->first_name . " " . $request->last_name;
         $user->CP_User->Email = $request->email;
@@ -215,7 +215,7 @@ class StudentsController extends Controller
      */
     public function destroy($id)
     {
-        $soap = new Soap('CP_Student');
+        $soap = new Soap('CP_Students');
         $student = $soap->Read(['Id' => $id]);
         if ($student == null) {
             return abort(404);
@@ -225,13 +225,13 @@ class StudentsController extends Controller
             return redirect()->route('students.index');
         }
         
-        $soap->soapClient->Delete(['Key' => $student->CP_Student->Key]);
+        $soap->soapClient->Delete(['Key' => $student->CP_Students->Key]);
         
         $soap = new Soap('CP_User');
-        $user = $soap->Read(['Id' => $student->CP_Student->User_Id]);
+        $user = $soap->Read(['Id' => $student->CP_Students->User_Id]);
         $soap->soapClient->Delete(['Key' => $user->CP_User->Key]);
         
-        $user = User::where('id', $student->CP_Student->User_Id)->first();
+        $user = User::where('id', $student->CP_Students->User_Id)->first();
         if ($user != null) {
             $user->delete();
         }
