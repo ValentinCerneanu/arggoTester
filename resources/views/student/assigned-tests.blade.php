@@ -7,7 +7,7 @@
             <div class="list-group">
                 @if(!empty($studentTests))
                     @foreach($studentTests as $studentTest)
-                        @if($studentTest->submitted)
+                        @if($studentTest->submitted || $studentTest->pastDueDate)
                             <a href="{{ route('complete-assignment', ['id' => $studentTest->Id]) }}" class="list-group-item list-group-item-action custom-list-item alert alert-{{ $studentTest->Status == 'Passed' ? 'success' : ($studentTest->Status == 'Failed' ? 'danger' : 'info') }}">
                                     {{ $studentTest->Test }}
                             </a>
