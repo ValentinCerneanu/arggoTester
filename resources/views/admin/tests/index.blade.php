@@ -4,12 +4,14 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Tests</h5>
-            <a class="btn btn-custom btn-block" href="{{ route('tests.create') }}">Add Test</a>
+            <a id="4" class="btn btn-custom btn-block" href="{{ route('tests.create') }}">Add Test</a>
             <div class="list-group">
                 @foreach($tests as $test)
                     <div class="d-flex w-100">
                         <a href="{{ route('questions.for-test', ['id' => $test->Id]) }}" class="list-group-item list-group-item-action custom-list-item">
                                 {{ $test->Title }}
+                                <br> 
+                                Category: {{ $test->Category }}
                         </a>
                         <a href="{{ route('tests.edit', ['id' => $test->Id]) }}" class="list-group-item list-group-item-action custom-list-item col-md-2">
                                 Edit

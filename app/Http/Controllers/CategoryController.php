@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Soap\Soap;
 
-class TestsController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -25,14 +25,16 @@ class TestsController extends Controller
      */
     public function index()
     {
-        $soap = new Soap('CP_Test');
-        $tests = $soap->ReadMultiple()->ReadMultiple_Result;
 
-        if (is_array($tests->CP_Test)) {
-            $tests = $tests->CP_Test;
+        $soap = new Soap('Parametrizare_categories');
+        $categories = $soap->ReadMultiple()->ReadMultiple_Result;
+
+        if (is_array($categories->Parametrizare_categories)) {
+            $categories = $categories->Parametrizare_categories;
         }
-        //die(var_dump($tests));
-        return view('admin.tests.index', compact('tests'));
+        //die(var_dump($categories));
+
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -42,15 +44,7 @@ class TestsController extends Controller
      */
     public function create()
     {
-        $soap = new Soap('Parametrizare_categories');
-        $category = $soap->ReadMultiple()->ReadMultiple_Result;
-
-        if (is_array($category->Parametrizare_categories)) {
-            $category = $category->Parametrizare_categories;
-        }
-        //die(var_dump($category));
-
-        return view('admin.tests.create', compact('category'));
+        return view('admin.categories.create');
     }
 
     /**
@@ -61,38 +55,16 @@ class TestsController extends Controller
      */
     public function store(Request $request)
     {
-
-        $test = [
-            'CP_Test1' => [
-                'Title' => $request->title,
-                'Description' => $request->description,
-                'ID_Category' => $request->category,
-                'Multiple_Submissions' => $request->multiple_submissions,
-                'Allocated_Time' => $request->allocated_time,      
+        $category = [
+            'Parametrizare_categories' => [
+                'Category' => $request->name   
             ],
         ];
-
-        $soap = new Soap('CP_Test1');
-        $tests = $soap->ReadMultiple()->ReadMultiple_Result;
-        if (is_array($tests->CP_Test1)) {
-            $tests = $tests->CP_Test1;
-        }
-        //die(var_dump($tests));
-        $id = 1;
-        foreach ($tests as $t) {
-            $aux = explode('T', $t->Id)[1];
-            if ($aux > $id) {
-                $id = $aux;
-            }
-        }
-        $id += 1;
-        $test['CP_Test1']['Id'] = 'T' . $id;
-
-        //die(var_dump($soap->soapClient->Create($test)));
-
-        $soap->soapClient->Create($test);
         
-        return redirect()->route('tests.index');
+        $soap = new Soap('Parametrizare_categories');
+        $soap->soapClient->Create($category);
+
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -101,10 +73,6 @@ class TestsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        return $this->edit($id);
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -112,17 +80,6 @@ class TestsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $soap = new Soap('CP_Test');
-        $test = $soap->Read(['Id' => $id]);
-        if($test == null) {
-            return abort(404);
-        }
-        $test = $test->CP_Test;
-
-        return view('admin.tests.edit', compact('test'));
-    }
 
     /**
      * Update the specified resource in storage.
@@ -147,7 +104,7 @@ class TestsController extends Controller
 
         $soap->soapClient->Update($test);
 
-        return redirect()->route('tests.index');
+        return redirect()->route('admin.category.index');
     }
 
     /**
@@ -164,13 +121,13 @@ class TestsController extends Controller
             return abort(404);
         }
         if ($this->notSafeToModify($id)) {
-            return redirect()->route('tests.index');
+            return redirect()->route('admin.category.index');
         }
 
         $soap->soapClient->Delete(['Key' => $test->CP_Test->Key]);
         \Session::flash('alert', 'Stergerea a fost efectuata cu succes!'); 
         \Session::flash('alert-class', 'alert-success'); 
-        return redirect()->route('tests.index');
+        return redirect()->route('admin.category.index');
     }
 
     public function notSafeToModify($id)

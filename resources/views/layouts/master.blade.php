@@ -18,8 +18,6 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     
-    
-    
 </head>
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light margin-bottom">
@@ -72,10 +70,6 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                     <img class="nav-link sidebar-logo" src="{{ asset('storage/logo.png') }}" alt="logo">
-                                <!-- <a class="nav-link" href="#">
-                                <span data-feather="home"></span>
-                                Dashboard <span class="sr-only">(current)</span>
-                                </a> -->
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link custom-list-item" href="{{ route('home') }}">
@@ -108,12 +102,6 @@
                             </a>
                             </h6>
                             <ul class="nav flex-column mb-2">
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link custom-list-item" href="{{ route('users') }}">
-                                    <span data-feather="file-text"></span>
-                                    Users
-                                    </a>
-                                </li> -->
                                 <li class="nav-item">
                                     <a class="nav-link custom-list-item" href="{{ route('students.index') }}">
                                     <span data-feather="file-text"></span>
@@ -126,12 +114,12 @@
                                     <i class="fas fa-university"></i> Universities
                                     </a>
                                 </li>
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link custom-list-item" href="{{ route('faculties.index') }}">
+                                <li class="nav-item">
+                                    <a class="nav-link custom-list-item" href="{{ route('categories.index') }}">
                                     <span data-feather="file-text"></span>
-                                    Faculties
+                                    <i class="fas fa-calculator"></i> Categories
                                     </a>
-                                </li> -->
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link custom-list-item" href="{{ route('tests.index') }}">
                                     <span data-feather="file-text"></span>

@@ -31,9 +31,9 @@
                 <div class="form-group">
                     <label for="category">Category</label>
                     <select name="category" class="form-control" id="category">
-                            <option value="Nav" {{ old('category') == "Nav" ? 'selected' : '' }}>Nav</option>
-                            <option value="C_x0023_" {{ old('category') == "C_x0023_" ? 'selected' : '' }}>C#</option>
-                            <option value="SQL_Server" {{ old('category') == "SQL_Server" ? 'selected' : '' }}>SQL Server</option>
+                        @foreach($category as $cat)
+                            <option value="{{$cat->ID_Category}}">{{$cat->Category}}</option>
+                        @endforeach
                     </select>
                     @if ($errors->has('category'))
                             <span class="form-text text-danger">

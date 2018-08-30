@@ -25,20 +25,23 @@ Route::get('/assignment/{id}', 'HomeController@completeAssignment')->middleware(
 Route::post('/submit-assignment/{id}', 'HomeController@submitAssignment')->middleware('student')->name('submit-assignment');
 Route::get('/assignment-warning/{id}', 'HomeController@assignmentWarning')->middleware('student')->name('assignment-warning');
 
-// Route::get('/universities', 'HomeController@universities')->middleware('admin')->name('universities');
-// Route::get('/faculties', 'HomeController@faculties')->middleware('admin')->name('faculties');
-// Route::get('/students', 'HomeController@students')->middleware('admin')->name('students');
-// Route::get('/tests', 'HomeController@tests')->middleware('admin')->name('tests');
-// Route::get('/questions', 'HomeController@questions')->middleware('admin')->name('questions');
-// Route::get('/answers', 'HomeController@answers')->middleware('admin')->name('answers');
-// Route::get('/assignments', 'HomeController@assignments')->middleware('admin')->name('assignments');
+
+Route::get('/universities', 'HomeController@universities')->middleware('admin')->name('universities');
+Route::get('/faculties', 'HomeController@faculties')->middleware('admin')->name('faculties');
+Route::get('/students', 'HomeController@students')->middleware('admin')->name('students');
+Route::get('/tests', 'HomeController@tests')->middleware('admin')->name('tests');
+Route::get('/questions', 'HomeController@questions')->middleware('admin')->name('questions');
+Route::get('/answers', 'HomeController@answers')->middleware('admin')->name('answers');
+Route::get('/assignments', 'HomeController@assignments')->middleware('admin')->name('assignments');
 Route::get('/users', 'HomeController@users')->middleware('admin')->name('users');
 
+Route::get('/categories', 'HomeController@users')->middleware('admin')->name('categories');
 
 Route::resources([
     'universities' => 'UniversitiesController',
     'faculties' => 'FacultiesController',
     'students' => 'StudentsController',
+    'categories' => 'CategoryController',
     'tests' => 'TestsController',
     'questions' => 'QuestionsController',
     'answers' => 'AnswersController',
