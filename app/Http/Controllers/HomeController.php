@@ -57,8 +57,7 @@ class HomeController extends Controller
 
                 $studentTest->Test_Obj = $test;
 
-                // TODO: do i need this later?
-                // $studentTest->pastDueDate = Carbon::now()->gt(Carbon::parse($studentTest->Due_Date)->addDay());
+                $studentTest->pastDueDate = Carbon::now()->gt(Carbon::parse($studentTest->Due_Date)->addDay());
                 $studentTest->submitted = Carbon::parse($studentTest->Submit_Date)->gte(Carbon::parse($studentTest->Assign_Date));
             }
         }
@@ -116,7 +115,7 @@ class HomeController extends Controller
         $soap = new Soap('CP_Test');
         $test = $soap->Read(['Id' => $studentTest->Test_Id])->CP_Test;
 
-        if(!$test->Multiple_Submissions && !$test->Allocated_Time && Carbon::parse($studentTest->Submit_Date)->lt(Carbon::parse($studentTest->Assign_Date))) {
+        if(!$test->Multiple_Submissions && !$test->Allocated_Time && Carbon::parse($studentTest->Submit_Date)->lt(Carbon::parse($studentTest->Assign_Date)) && Carbon::parse($studentTest->Due_Date)->gt(Carbon::today())) {
             
             $soap = new Soap('CP_StudentTest');
             $studentTest = $soap->Read(['Id' => $id]);
